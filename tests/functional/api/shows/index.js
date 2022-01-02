@@ -1,17 +1,16 @@
 import chai from "chai";
 import request from "supertest";
 const mongoose = require("mongoose");
-import Movie from "../../../../api/movies/movieModel";
 import api from "../../../../index";
 
 
 const expect = chai.expect;
 let db;
-let movieID = '634649'
-let movieTitle = "Spider-Man: No Way Home"
+let showID = '18165';
+let showTitle = 'The Vampire Diaries';
 let user1token;
 
-describe("Movies endpoint", () => {
+describe("Shows endpoint", () => {
   before(() => {
     mongoose.connect(process.env.MONGO_DB, {
       useNewUrlParser: true,
@@ -50,39 +49,40 @@ describe("Movies endpoint", () => {
     api.close(); // Release PORT 8080
   });
 
-  describe("GET /api/movies/tmdb/discover ", () => {
-    it("should return tmdb movies and a status 200", (done) => {
+  describe("GET /api/shows/tmdb/discover ", () => {
+    it("should return tmdb shows and a status 200", (done) => {
+
       request(api)
-        .get("/api/movies/tmdb/discover")
+        .get("/api/shows/tmdb/discover")
         .set("Accept", "application/json")
         .set("Authentication", 'BEARER ' + user1token)
         .expect(200)
         .end((err, res) => {
           expect(res.body).to.be.a("object");
           done();
-
         });
     });
   });
 
-  describe("GET /api/movies/tmdb/movies/:id", () => {
+  describe("GET /api/shows/tmdb/shows/:id", () => {
     describe("when the id is valid", () => {
-      it("should return the matching movie", () => {
+      it("should return the matching show", () => {
        request(api)
-          .get(`/api/movies/tmdb/movies/${movieID}`)
+          .get(`/api/shows/tmdb/shows/${showID}`)
           .set("Accept", "application/json")
           .set("Authentication", 'BEARER ' + user1token)
           .expect(200)
           .then((res) => {
-            expect(res.body).to.have.property("title",movieTitle);
+            expect(res.body).to.have.property("title",showTitle);
             
           });
       });
     });
+    
     describe("when the id is invalid", () => {
       it("should return the NOT found message", () => {
        request(api)
-        .get(`/api/movies/tmdb/movies/${movieID}`)
+        .get(`/api/shows/tmdb/shows/${showID}`)
         .set("Accept", "application/json")
         .set("Authentication", 'BEARER ' + user1token)
           .expect(404)
@@ -91,39 +91,6 @@ describe("Movies endpoint", () => {
             message: "The resource you requested could not be found.",
           });
       });
-    });
-  });
-
-  describe("GET /api/movies/tmdb/upcoming ", () => {
-    it("should return tmdb movies and a status 200", (done) => {
-
-      request(api)
-        .get("/api/movies/tmdb/upcoming")
-        .set("Accept", "application/json")
-        .set("Authentication", 'BEARER ' + user1token)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.body).to.be.a("object");
-          done();
-
-        });
-    });
-  });
-
-  
-  describe("GET /api/movies/tmdb/toprated ", () => {
-    it("should return tmdb movies and a status 200", (done) => {
-
-      request(api)
-        .get("/api/movies/tmdb/toprated")
-        .set("Accept", "application/json")
-        .set("Authentication", 'BEARER ' + user1token)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.body).to.be.a("object");
-          done();
-
-        });
     });
   });
 
