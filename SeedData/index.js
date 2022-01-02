@@ -25,7 +25,7 @@ async function loadGenres() {
     try {
       await genreModel.deleteMany();
       await genreModel.collection.insertMany(genres);
-      console.info(`${genres.length} users were successfully stored.`);
+      console.info(`${genres.length} genres were successfully stored.`);
     } catch (err) {
       console.error(`failed to Load user Data: ${err}`);
     }
@@ -45,7 +45,7 @@ export async function loadMovies() {
     console.error(`failed to Load movie Data: ${err}`);
   }
 }
-if (process.env.SEED_DB) {
+if (process.env.SEED_DB == 'true') {
   loadUsers();
   loadGenres();//you may not need this line if you skipped the exercises
   loadMovies();//ADD THIS LINE
