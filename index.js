@@ -22,6 +22,15 @@ const errHandler = (err, req, res, next) => {
   res.status(500).send(`Hey!! You caught the error 👍👍. Here's the details: ${err.stack} `);
 };
 
+app.use(express.static("public"));
+app.use(
+  session({
+    secret: "ilikecake",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
 const app = express();
 app.use(passport.initialize());
 const port = process.env.PORT;
