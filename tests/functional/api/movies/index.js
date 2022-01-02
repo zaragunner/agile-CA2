@@ -3,10 +3,12 @@ import request from "supertest";
 const mongoose = require("mongoose");
 import Movie from "../../../../api/movies/movieModel";
 import api from "../../../../index";
-import movies from "../../../../seedData/movies";
+
 
 const expect = chai.expect;
 let db;
+let movieID = '634649'
+let movieTitle = "Spider-Man: No Way Home"
 let user1token;
 
 describe("Movies endpoint", () => {
@@ -27,12 +29,7 @@ describe("Movies endpoint", () => {
   });
 
   beforeEach(async () => {
-    try {
-      await Movie.deleteMany();
-      await Movie.collection.insertMany(movies);
-    } catch (err) {
-      console.error(`failed to Load user Data: ${err}`);
-    }
+    //get user JWT before trying to connect to TMDB
     request(api)
       .post("/api/users?action=authenticate")
       .send({
@@ -69,25 +66,26 @@ describe("Movies endpoint", () => {
     });
   });
 
-  describe("GET /api/movies/:id", () => {
+  describe("GET /api/movies/tmdb/movies/:id", () => {
     describe("when the id is valid", () => {
       it("should return the matching movie", () => {
-        return request(api)
-          .get(`/api/movies/${movies[0].id}`)
+       request(api)
+          .get(`/api/movies/tmdb/movies/${movieID}`)
           .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
+          .set("Authentication", 'BEARER ' + user1token)
           .expect(200)
           .then((res) => {
-            expect(res.body).to.have.property("title", movies[0].title);
+            expect(res.body).to.have.property("title",movieTitle);
+            
           });
       });
     });
     describe("when the id is invalid", () => {
       it("should return the NOT found message", () => {
-        return request(api)
-          .get("/api/movies/9999")
-          .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
+       request(api)
+        .get(`/api/movies/tmdb/movies/${movieID}`)
+        .set("Accept", "application/json")
+        .set("Authentication", 'BEARER ' + user1token)
           .expect(404)
           .expect({
             status_code: 404,
