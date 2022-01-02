@@ -4,7 +4,7 @@ import moviesRouter from './api/movies';
 import genresRouter from './api/genres';
 import showsRouter from './api/shows'
 import './db';
-import './seedData'
+import './SeedData'
 import usersRouter from './api/users';
 import session from 'express-session';
 import authenticate from './authenticate';
