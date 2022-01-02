@@ -24,6 +24,7 @@
     "test": "cross-env NODE_ENV=test mocha",
     "compile:tmdb": "babel ./api/ --out-dir build/api"
   },
+  
   "author": "zaragunner",
   "license": "ISC",
   "devDependencies": {
