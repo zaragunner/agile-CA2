@@ -41,6 +41,7 @@ describe("Users endpoint", () => {
       console.error(`failed to Load user test Data: ${err}`);
     }
   });
+  
   afterEach(() => {
     api.close();
   });
