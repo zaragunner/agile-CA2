@@ -8,7 +8,7 @@ import showsRouter from './api/shows'
 import usersRouter from './api/users';
 
 import './db';
-import './seedData'
+import './SeedData'
 
 import session from 'express-session';
 import authenticate from './authenticate';
