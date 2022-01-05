@@ -120,38 +120,38 @@ describe("Movies endpoint", () => {
     });
   });
 
-  // describe("GET /api/movies/tmdb/upcoming ", () => {
-  //   it("should return tmdb movies and a status 200", (done) => {
+  describe("GET /api/movies/tmdb/upcoming ", () => {
+    it("should return tmdb movies and a status 200", (done) => {
 
-  //     request(api)
-  //       .get("/api/movies/tmdb/upcoming")
-  //       .set("Accept", "application/json")
-  //       .set("Authentication", 'BEARER ' + user1token)
-  //       .expect(200)
-  //       .end((err, res) => {
-  //         expect(res.body).to.be.a("object");
-  //         done();
+      request(api)
+        .get("/api/movies/tmdb/upcoming")
+        .set("Accept", "application/json")
+        .set("Authentication", 'BEARER ' + user1token)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body).to.be.a("object");
+          done();
 
-  //       });
-  //   });
-  // });
+        });
+    });
+  });
 
   
-  // describe("GET /api/movies/tmdb/toprated ", () => {
-  //   it("should return tmdb movies and a status 200", (done) => {
+  describe("GET /api/movies/tmdb/toprated ", () => {
+    it("should return tmdb movies and a status 200", (done) => {
 
-  //     request(api)
-  //       .get("/api/movies/tmdb/toprated")
-  //       .set("Accept", "application/json")
-  //       .set("Authentication", 'BEARER ' + user1token)
-  //       .expect(200)
-  //       .end((err, res) => {
-  //         expect(res.body).to.be.a("object");
-  //         done();
+      request(api)
+        .get("/api/movies/tmdb/toprated")
+        .set("Accept", "application/json")
+        .set("Authentication", 'BEARER ' + user1token)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body).to.be.a("object");
+          done();
 
-  //       });
-  //   });
-  // });
+        });
+    });
+  });
 
 
 });
