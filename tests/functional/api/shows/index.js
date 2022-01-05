@@ -61,6 +61,9 @@ describe("Shows endpoint", () => {
             })
   });
 
+  afterEach(() => {
+    api.close();
+  });
 
 
 
@@ -74,8 +77,9 @@ describe("Shows endpoint", () => {
         .set("Authorization",  user1token)
         .expect(200)
         .end((err, res) => {
-          expect(res.body).to.be.a("object");
           console.log(res.body)
+          expect(res.body).to.be.a("object");
+        
           done();
         });
     });

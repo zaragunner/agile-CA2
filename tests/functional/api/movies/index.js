@@ -64,49 +64,51 @@ describe("Movies endpoint", () => {
   });
 
 
+  afterEach(() => {
+    api.close();
+  });
 
 
 
 
+  describe("GET /api/movies/tmdb/discover ", () => {
+    it("should return tmdb movies and a status 200", () => {
 
-  // describe("GET /api/movies/tmdb/discover ", () => {
-  //   it("should return tmdb movies and a status 200", () => {
-
-  //     return request(api)
-  //     .get("/api/movies/tmdb/discover")
-  //     .set("Accept", "application/json")
-  //     .set('Authorization', user1token )
-  //     .expect(200)
-  //     .then((res) => {
-  //       console.log(res.body)
-  //       expect(res.body).to.have.property("results");
+      return request(api)
+      .get("/api/movies/tmdb/discover")
+      .set("Accept", "application/json")
+      .set('Authorization', user1token )
+      .expect(200)
+      .then((res) => {
+        console.log(res.body)
+        expect(res.body).to.have.property("results");
        
-  //     });
-  //   });
-  // });
+      });
+    });
+  });
 
   describe("GET /api/movies/tmdb/movies/:id", () => {
-    // describe("when the id is valid", () => {
-    //   it("should return the matching movie", async () => {
-    //   return request(api)
-    //       .get(`/api/movies/tmdb/movies/${movieID}`)
-    //       .set("Accept", "application/json")
-    //       .set("Authorization",  user1token)
-    //       .expect(200)
-    //       .then((res) => {
-    //         console.log(res.body)
-    //         expect(res.body).to.have.property("title",movieTitle);
+    describe("when the id is valid", () => {
+      it("should return the matching movie", async () => {
+      return request(api)
+          .get(`/api/movies/tmdb/movies/${movieID}`)
+          .set("Accept", "application/json")
+          .set("Authorization",  user1token)
+          .expect(200)
+          .then((res) => {
+            console.log(res.body)
+            expect(res.body).to.have.property("title",movieTitle);
            
-    //       });
-    //   });
-    // });
+          });
+      });
+    });
 
   
 
     describe("when the id is invalid", () => {
       it("should return the NOT found message", () => {
        request(api)
-        .get(`/api/movies/tmdb/movies/${movieID}`)
+        .get(`/api/movies/tmdb/movies/0000`)
         .set("Accept", "application/json")
         .set("Authorization", user1token)
           .expect(404)
@@ -127,6 +129,9 @@ describe("Movies endpoint", () => {
         .set("Authorization",  user1token)
         .expect(200)
         .end((err, res) => {
+          //these api results do not have unique features to test if the response is correct.
+          //api reults constantly change 
+          console.log(res.body)
           expect(res.body).to.be.a("object");
           done();
 
@@ -144,6 +149,9 @@ describe("Movies endpoint", () => {
         .set("Authorization",  user1token)
         .expect(200)
         .end((err, res) => {
+           //these api results do not have unique features to test if the response is correct.
+          //api reults constantly change 
+          console.log(res.body)
           expect(res.body).to.be.a("object");
           done();
 
