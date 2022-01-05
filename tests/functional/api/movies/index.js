@@ -71,54 +71,54 @@ describe("Movies endpoint", () => {
 
 
 
-  describe("GET /api/movies/tmdb/discover ", () => {
-    it("should return tmdb movies and a status 200", () => {
+  // describe("GET /api/movies/tmdb/discover ", () => {
+  //   it("should return tmdb movies and a status 200", () => {
 
-      return request(api)
-      .get("/api/movies/tmdb/discover")
-      .set("Accept", "application/json")
-      .set('Authorization', user1token )
-      .expect(200)
-      .then((res) => {
-        console.log(res.body)
-        expect(res.body).to.be.a("object")
+  //     return request(api)
+  //     .get("/api/movies/tmdb/discover")
+  //     .set("Accept", "application/json")
+  //     .set('Authorization', user1token )
+  //     .expect(200)
+  //     .then((res) => {
+  //       console.log(res.body)
+  //       expect(res.body).to.be.a("object")
        
-      });
-    });
-  });
+  //     });
+  //   });
+  // });
 
-  describe("GET /api/movies/tmdb/movies/:id", () => {
-    describe("when the id is valid", () => {
-      it("should return the matching movie", async () => {
-      return request(api)
-          .get(`/api/movies/tmdb/movies/${movieID}`)
-          .set("Accept", "application/json")
-          .set("Authorization",  user1token)
-          .expect(200)
-          .then((res) => {
-            console.log(res.body)
-            expect(res.body).to.be.a("object")
+  // describe("GET /api/movies/tmdb/movies/:id", () => {
+  //   describe("when the id is valid", () => {
+  //     it("should return the matching movie", async () => {
+  //     return request(api)
+  //         .get(`/api/movies/tmdb/movies/${movieID}`)
+  //         .set("Accept", "application/json")
+  //         .set("Authorization",  user1token)
+  //         .expect(200)
+  //         .then((res) => {
+  //           console.log(res.body)
+  //           expect(res.body).to.be.a("object")
            
-          });
-      });
-    });
+  //         });
+  //     });
+  //   });
 
   
 
-    describe("when the id is invalid", () => {
-      it("should return the NOT found message", () => {
-       request(api)
-        .get(`/api/movies/tmdb/movies/0000`)
-        .set("Accept", "application/json")
-        .set("Authorization", user1token)
-          .expect(404)
-          .expect({
-            status_code: 404,
-            message: "The resource you requested could not be found.",
-          });
-      });
-    });
-  });
+  //   describe("when the id is invalid", () => {
+  //     it("should return the NOT found message", () => {
+  //      request(api)
+  //       .get(`/api/movies/tmdb/movies/0000`)
+  //       .set("Accept", "application/json")
+  //       .set("Authorization", user1token)
+  //         .expect(404)
+  //         .expect({
+  //           status_code: 404,
+  //           message: "The resource you requested could not be found.",
+  //         });
+  //     });
+  //   });
+  // });
 
   describe("GET /api/movies/tmdb/upcoming ", () => {
     it("should return tmdb movies and a status 200", (done) => {
