@@ -62,9 +62,7 @@ describe("Shows endpoint", () => {
   });
 
 
-  afterEach(() => {
-    api.close(); // Release PORT 8080
-  });
+
 
 
   describe("GET /api/shows/tmdb/tvshows ", () => {
@@ -83,17 +81,18 @@ describe("Shows endpoint", () => {
     });
   });
 
-  describe("GET /api/shows/tmdb/shows/:id", () => {
+  describe("GET /api/shows/tmdb/tvshows/:id", () => {
     describe("when the id is valid", () => {
       it("should return the matching show", () => {
        request(api)
-          .get(`/api/shows/tmdb/shows/${showID}`)
+          .get(`/api/shows/tmdb/tvshows/${showID}`)
           .set("Accept", "application/json")
           .set("Authorization", user1token)
           .expect(200)
           .then((res) => {
+            console.log(res.body)
             expect(res.body).to.have.property("title",showTitle);
-            
+         
           });
       });
     });
@@ -101,14 +100,10 @@ describe("Shows endpoint", () => {
     describe("when the id is invalid", () => {
       it("should return the NOT found message", () => {
        request(api)
-        .get(`/api/shows/tmdb/shows/${showID}`)
+        .get(`/api/shows/tmdb/tvshows/0`)
         .set("Accept", "application/json")
         .set("Authorization",  user1token)
           .expect(404)
-          .expect({
-            status_code: 404,
-            message: "The resource you requested could not be found.",
-          });
       });
     });
   });

@@ -64,9 +64,7 @@ describe("Movies endpoint", () => {
   });
 
 
-  afterEach(() => {
-    api.close(); // Release PORT 8080
-  });
+
 
 
 
