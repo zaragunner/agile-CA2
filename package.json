@@ -12,7 +12,7 @@
     "compile:genremodels": "babel ./api/genres --out-dir build/api/genres",
     "compile:models": "npm-run-all compile:shows compile:moviemodels compile:usermodels compile:genremodels",
     "compile:authenticate": "babel ./authenticate --out-dir build/authenticate",
-    "compile:seed": "babel ./SeedData --out-dir build/seedData",
+    "compile:seed": "babel ./seedData --out-dir build/seedData",
     "compile:app": "babel index.js --out-dir build/",
     "compile:db": "babel ./db --out-dir build/db",
     "copy:nodeModules": "ncp ./node_modules/ build/node_modules",

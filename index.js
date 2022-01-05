@@ -1,15 +1,19 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import bodyParser from "body-parser";
+
 import moviesRouter from './api/movies';
 import genresRouter from './api/genres';
 import showsRouter from './api/shows'
-import './db';
-import './SeedData'
 import usersRouter from './api/users';
+
+import './db';
+import './seedData'
+
 import session from 'express-session';
 import authenticate from './authenticate';
 import passport from './authenticate';
-import bodyParser from "body-parser";
+
 
 
 
@@ -39,7 +43,7 @@ app.use(
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-app.use(express.json());
+// app.use(express.json());
 app.use('/api/movies', passport.authenticate('jwt', {session: false}),moviesRouter);
 app.use('/api/shows', passport.authenticate('jwt', {session: false}),showsRouter);
 app.use('/api/genres', genresRouter );

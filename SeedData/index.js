@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import genreModel from '../api/genres/genreModel'
 import genres from './genres'
 import movieModel from '../api/movies/movieModel';
-import movies from './movies.js';
+import movies from './movies.js.js';
 
 dotenv.config();
 
