@@ -9,10 +9,11 @@ import usersRouter from './api/users';
 import session from 'express-session';
 import authenticate from './authenticate';
 import passport from './authenticate';
+import bodyParser from "body-parser";
 
 
 
-dotenv.config();
+
 const errHandler = (err, req, res, next) => {
   /* if the error in development then send stack trace to display whole error,
   if it's in production then just send error message  */
@@ -22,9 +23,11 @@ const errHandler = (err, req, res, next) => {
   res.status(500).send(`Hey!! You caught the error 👍👍. Here's the details: ${err.stack} `);
 };
 
-
+dotenv.config();
 
 const app = express();
+const port = process.env.PORT;
+
 app.use(express.static("public"));
 app.use(
   session({
@@ -34,7 +37,8 @@ app.use(
   })
 );
 app.use(passport.initialize());
-const port = process.env.PORT;
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.use(express.json());
 app.use('/api/movies', passport.authenticate('jwt', {session: false}),moviesRouter);
 app.use('/api/shows', passport.authenticate('jwt', {session: false}),showsRouter);
