@@ -126,7 +126,7 @@ describe("Movies endpoint", () => {
       request(api)
         .get("/api/movies/tmdb/upcoming")
         .set("Accept", "application/json")
-        .set("Authentication", 'BEARER ' + user1token)
+        .set("Authorization",  user1token)
         .expect(200)
         .end((err, res) => {
           expect(res.body).to.be.a("object");
@@ -143,7 +143,7 @@ describe("Movies endpoint", () => {
       request(api)
         .get("/api/movies/tmdb/toprated")
         .set("Accept", "application/json")
-        .set("Authentication", 'BEARER ' + user1token)
+        .set("Authorization",  user1token)
         .expect(200)
         .end((err, res) => {
           expect(res.body).to.be.a("object");

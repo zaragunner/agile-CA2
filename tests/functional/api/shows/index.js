@@ -2,6 +2,7 @@ import chai from "chai";
 import request from "supertest";
 const mongoose = require("mongoose");
 import api from "../../../../index";
+import User from "../../../../api/users/userModel";
 
 
 const expect = chai.expect;
@@ -27,38 +28,56 @@ describe("Shows endpoint", () => {
     }
   });
 
-  beforeEach(async () => {
-    //get user JWT before trying to connect to TMDB
-    request(api)
-      .post("/api/users?action=authenticate")
-      .send({
+  beforeEach( async () => {
+    try {
+      await User.deleteMany();
+      // Register two users
+      console.log("USERS CLEARED")
+      await request(api).post("/api/users?action=register").send({
         username: "user1",
         password: "test1",
+      });
+      await request(api).post("/api/users?action=register").send({
+        username: "user2",
+        password: "test2",
+      });
+    } catch (err) {
+      console.error(`failed to Load user test Data: ${err}`);
+    }
+    //get user JWT before trying to connect to TMDB
+    return request(api)
+      .post("/api/users?action=authenticate")
+      .send({
+        username: "user2",
+        password: "test2",
       })
       .expect(200)
       .then((res) => {
         console.log("FETCHING TOKEN")
         expect(res.body.success).to.be.true;
         expect(res.body.token).to.not.be.undefined;
-        user1token = res.body.token.substring(7);
-
-        console.log("USER TOKEN FETCHED " + user1token)
-      })
+        user1token = 'Bearer ' + res.body.token.substring(7);
+        console.log(user1token)
+            })
   });
+
+
   afterEach(() => {
     api.close(); // Release PORT 8080
   });
 
-  describe("GET /api/shows/tmdb/discover ", () => {
+
+  describe("GET /api/shows/tmdb/tvshows ", () => {
     it("should return tmdb shows and a status 200", (done) => {
 
       request(api)
-        .get("/api/shows/tmdb/discover")
+        .get("/api/shows/tmdb/tvshows")
         .set("Accept", "application/json")
-        .set("Authentication", 'BEARER ' + user1token)
+        .set("Authorization",  user1token)
         .expect(200)
         .end((err, res) => {
           expect(res.body).to.be.a("object");
+          console.log(res.body)
           done();
         });
     });
@@ -70,7 +89,7 @@ describe("Shows endpoint", () => {
        request(api)
           .get(`/api/shows/tmdb/shows/${showID}`)
           .set("Accept", "application/json")
-          .set("Authentication", 'BEARER ' + user1token)
+          .set("Authorization", user1token)
           .expect(200)
           .then((res) => {
             expect(res.body).to.have.property("title",showTitle);
@@ -84,7 +103,7 @@ describe("Shows endpoint", () => {
        request(api)
         .get(`/api/shows/tmdb/shows/${showID}`)
         .set("Accept", "application/json")
-        .set("Authentication", 'BEARER ' + user1token)
+        .set("Authorization",  user1token)
           .expect(404)
           .expect({
             status_code: 404,
