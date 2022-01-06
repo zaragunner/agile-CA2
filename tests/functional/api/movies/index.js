@@ -131,6 +131,7 @@ describe("Movies endpoint", () => {
         .end((err, res) => {
           //these api results do not have unique features to test if the response is correct.
           //api reults constantly change 
+          //console logging to ensure correct data is being returned
           console.log(res.body)
           expect(res.body).to.be.a("object");
           done();
